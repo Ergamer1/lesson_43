@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script>
+		var request = function(url, successCallback, errorCallback) {
+      var xhr = new XMLHttpRequest();
+      xhr.timeout = 2000;
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+						successCallback(xhr.response);
+          } else {
+							errorCallback(xhr.status);
+          }
+        }
+      };
+      xhr.ontimeout = function() {
+				errorCallback('Timeout');
+      };
+      xhr.open('GET', url, true);
+      xhr.send();
+    };
+var getUsersUrl = ''
+var handleError = function(error) {
+
+};
+
+var handleReposList = function(repos) {
+	console.log(repos);
+};
+var handleUsersList = function(result) {
+	var list = JSON.parse(result).items;
+
+	list.forEach(function(user){
+		request(user.respos_url, handleReposList, handleError);
+	});
+}
+request(getUsersUrl, handleUsersList, handleError) {
+
+};
+	</script>
+</head>
+
+<body>
+
+</body>
+
+</html>

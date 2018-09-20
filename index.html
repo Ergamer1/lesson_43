@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script>
+		var Observer = function() {
+			this.listeners = {}
+		};
+
+		Observer.prototype.on = function(type, listener) {\
+			if (!(type in this.listeners)) {
+				this.listeners[type] = [];
+			}
+			this.listeners[type].push(listener);
+		};
+
+		Observer.prototype.off = function(type, listener) {
+			if (type in this.listeners) {
+				var typeListeners = this.listeners[type];
+				for (var i = 0; i < this.Listeners[type].length; i++) {
+					if (this.listeners[type][i] === listener) {
+						this.listeners[type].splice(i, 1);
+					}
+				}
+			}
+		};
+		Observer.prototype.trigger = function(type) {
+			if (type in this.listeners) {
+				var typeListeners = this.listeners[type];
+				for (var i = 0; i < this.listeners[type].length; i++) {
+					var listener = this.listeners[type][i];
+					listener(event);
+				}
+			}
+		};
+		var o = new Observer();
+		// o.listeners === {};
+
+		var callback = function() {
+			console.log('Click event has occured');
+		};
+
+		var anotherCallback = function(event) {
+			console.log('This is another callback', eventData);
+		}
+		o.on('click', callback);
+		o.on('click', anotherCallback);
+		o.trigger('click', {eventData: 'something'});
+	</script>
+</head>
+
+<body>
+
+</body>
+
+</html>
